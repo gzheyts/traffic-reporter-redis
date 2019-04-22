@@ -26,11 +26,11 @@ public class ApiResponse {
 
     private List<String> domains;
 
-    public static ApiResponse of(HttpStatus httpStatus, String errorMessage) {
+    static ApiResponse of(HttpStatus httpStatus, String errorMessage) {
         return new ApiResponse(httpStatus, errorMessage, null);
     }
 
-    public static ApiResponse ok() {
+    public static ApiResponse saved() {
         return new ApiResponse(HttpStatus.CREATED, "ok", null);
     }
 

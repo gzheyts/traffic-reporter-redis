@@ -5,8 +5,8 @@ import com.gzheyts.trafficreporterredis.rest.ApiResponse;
 import com.gzheyts.trafficreporterredis.service.TrafficService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,11 +14,10 @@ import java.time.Instant;
 
 @RestController
 @Slf4j
-@RequestMapping(value = "/")
+@RequiredArgsConstructor
 public class TrafficController {
 
-    @Autowired
-    private TrafficService trafficService;
+    private final TrafficService trafficService;
 
     @PostMapping("visited_links")
     @ApiOperation("Save traffic")
@@ -26,7 +25,7 @@ public class TrafficController {
     public ApiResponse saveTraffic(@ApiParam(value = "payload with traffic links", required = true) @RequestBody Traffic traffic) {
         log.info("save traffic request - traffic: {}", traffic);
         trafficService.saveTraffic(traffic, Instant.now().getEpochSecond());
-        return ApiResponse.ok();
+        return ApiResponse.saved();
     }
 
     @GetMapping("visited_domains")
